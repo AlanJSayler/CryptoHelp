@@ -71,19 +71,33 @@ def decryptAffine(coefKey, offKey, cipherText):
 
 #take a^b mod c quickly using the doubling exponents trick
 def raiseToMod(a,b,c):
-	if(isPositiveInt(a) != 1 or isPositiveInt(b) != 1 or isPositiveInt(c) != 1):
-		print("Error: We're assuming we're working in Z*, so a,b, and c need to be positive integers to" +
-		      " take a^b mod c")
-	exp = 1
-	curr = a
-	#use doubling trick at first...
-	while(exp <= b/2):
-		curr = curr * curr
-		curr = curr % c
-		exp = exp * 2 
-	while(exp < b):
-		curr = curr*a
-		curr = curr%c
-		exp = exp + 1
-	return curr %c
+    if(isPositiveInt(a) != 1 or isPositiveInt(b) != 1 or isPositiveInt(c) != 1):
+        print("Error: We're assuming we're working in Z*, so a,b, and c need to" +
+        " be positive integers to take a^b mod c")
+    exp = 1
+    curr = a
+    #use doubling trick at first...
+    while(exp <= b/2):
+        curr = curr * curr
+        curr = curr % c
+        exp = exp * 2 
+    while(exp < b):
+        curr = curr*a
+        curr = curr%c
+        exp = exp + 1
+    return curr %c
 
+#use Fermat's little theorem to test if some integer is likely prime
+#this does not guarantee primality. Return -1 if number is definitely not
+#prime. Return 1 if number is likely prime
+#TODO: generalize away from python's int type to allow for 'real' (i.e. huge)
+#tests, rather than the 'toy' tests used for class
+def isLikelyPrime(p):
+    if(isPositiveInt(p) != 1):
+        print("Error: Nonpositive or Noninteger numbers aren't prime for our purposes")
+        return -1
+    if p == 2:
+        return 1
+    if(raiseToMod(2,p,p) == 2):
+        return 1
+    return -1
