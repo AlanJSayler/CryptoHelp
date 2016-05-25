@@ -1,3 +1,4 @@
+import math
 alphabet = """ABCDEFGHIJKLMNOPQRSTUVWXYZ"""
 #Take the letters and make them into the digits associated with their index in
 #alphabet, return -1 on error
@@ -101,3 +102,27 @@ def isLikelyPrime(p):
     if(raiseToMod(2,p,p) == 2):
         return 1
     return -1
+
+#checks if a number is prime. Returns 1 iff the number is a positive
+#,prime integer. This algorithm takes every prime <= the number in question
+#and sees if it divides the number in question. This is the fastest algorithm
+#that guarantees to return true iff the integer is prime
+def isPrime(p):
+    if(isPositiveInt(p) != 1):
+        print("Error: Nonpositive or Noninteger numbers aren't prime for our purposes")
+        return -1
+    if(p == 1):
+        print("1 is obviously the unit")
+        return -1
+    if(p == 2):
+        return 1
+    curr = 2
+    while curr <= math.sqrt(p):
+        if(isPrime(curr) == 1):
+            if p % curr == 0:
+                return -1
+        curr = curr + 1
+    return 1
+
+         
+
