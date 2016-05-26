@@ -124,5 +124,14 @@ def isPrime(p):
         curr = curr + 1
     return 1
 
-         
-
+#find the inverse of a mod n, -1 on error. Since we're doing
+#'toy' problems, do this with bruth force rather than
+#Euclid's extended algorithm
+def multiplicativeInverseMod(a,n):
+    if (isPositiveInt(a) != 1 or isPositiveInt(n) != 1):
+        print("Error: Need Positive Integers")
+        return -1
+    for i in range(1,n):
+        if ((a * i % n) == 1):
+            return i
+    return -1
